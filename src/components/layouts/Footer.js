@@ -11,27 +11,49 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Footer = () => {
   const socialIcons = [
-    { icon: <FaFacebookF />, key: 'facebook' },
-    { icon: <FaTwitter />, key: 'twitter' },
-    { icon: <FaGoogle />, key: 'google' },
-    { icon: <FaInstagram />, key: 'instagram' },
-    { icon: <FaLinkedinIn />, key: 'linkedin' },
-    { icon: <FaGithub />, key: 'github' }
+    { icon: <FaFacebookF />, key: 'facebook', color: '#25A18E' },
+    { icon: <FaTwitter />, key: 'twitter', color: '#93C86D' },
+    { icon: <FaGoogle />, key: 'google', color: '#E56E38' },
+    { icon: <FaInstagram />, key: 'instagram', color: '#F3B550' },
+    { icon: <FaLinkedinIn />, key: 'linkedin', color: '#CE8042' },
+    { icon: <FaGithub />, key: 'github', color: '#004E64' }
   ];
 
   return (
-    <footer className="bg-dark text-center text-white">
-      <div className="container py-4 pb-0"
-      style={{
-        // marginTop:'100px',
-      }}>
+    <footer className="text-center" style={{ 
+      backgroundColor: '#004E64',
+      color: '#E0FECA',
+      fontFamily: 'TAN-St-Canard, sans-serif'
+    }}>
+      <div className="container py-4 pb-0">
         <section className="mb-4">
           {socialIcons.map((social) => (
             <button
               key={social.key}
-              className="btn btn-outline-light btn-floating m-1"
+              className="btn btn-floating m-1"
               type="button"
               aria-label={social.key}
+              style={{
+                color: '#E0FECA',
+                backgroundColor: social.color,
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = '#E0FECA';
+                e.currentTarget.style.color = social.color;
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = social.color;
+                e.currentTarget.style.color = '#E0FECA';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
             >
               {social.icon}
             </button>
@@ -42,11 +64,13 @@ const Footer = () => {
       <div 
         className="text-center p-3" 
         style={{ 
-          backgroundColor: 'rgba(0, 0, 0, 0.2)', 
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          fontFamily: 'TAN-St-Canard, sans-serif'
         }}
       >
-        © {new Date().getFullYear()} abcabc
-        <a className="text-white ms-1" href="abc">
+        © {new Date().getFullYear()} PackUp Travel
+        <a className="text-white ms-1" href="/">
+          All Rights Reserved
         </a>
       </div>
     </footer>
