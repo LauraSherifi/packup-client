@@ -10,7 +10,7 @@ function MyNavbar() {
 
   return (
     <>
-      <Navbar expand="md" className="shadow-sm py-2 sticky-top bg-primary" style={{ backgroundColor: '#fff!important' }}>      
+      <Navbar expand="md" className="shadow-sm py-2 sticky-top bg-primary" style={{ backgroundColor: '#fff !important' }}>      
           <Container fluid="lg">
           {/* Logo */}
           <Navbar.Brand href="#" className="d-flex align-items-center me-md-5">
