@@ -2,19 +2,26 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/authRoutes'); // ✅ NEW
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ✅ Middleware FIRST
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Important for parsing JSON bodies
 
-app.use('/api/auth', authRoutes); // ✅ NEW
+// ✅ Routes
+const authRoutes = require('./routes/authRoutes');
+const protectedRoutes = require('./routes/protectedRoutes');
+const tripRoutes = require('./routes/trips');
 
-// Test route to check DB connection
+app.use('/api/auth', authRoutes);
+app.use('/api/protected', protectedRoutes);
+app.use('/api/trips', tripRoutes);
+
+// ✅ Test DB Route
 app.get('/test-db', (req, res) => {
   db.query('SELECT 1 + 1 AS result', (err, results) => {
     if (err) {
@@ -24,7 +31,7 @@ app.get('/test-db', (req, res) => {
   });
 });
 
-// Start server
+// ✅ Start Server
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
 });
