@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
 const dotenv = require('dotenv');
+const authRoutes = require('./routes/authRoutes'); // ✅ NEW
+
 dotenv.config();
 
 const app = express();
@@ -9,6 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/auth', authRoutes); // ✅ NEW
 
 // Test route to check DB connection
 app.get('/test-db', (req, res) => {
