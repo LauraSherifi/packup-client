@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'; // Added useNavigate
 import { Container, Nav, Navbar, Button, Image } from 'react-bootstrap';
 import ContactUs from '../pages/ContactUs';
 
@@ -7,11 +7,18 @@ const logo1 = '/img/logo1.png';
 
 function MyNavbar() {
   const [showContactModal, setShowContactModal] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
+
+  // Logout handler function
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove token from storage
+    navigate('/login'); // Redirect to login page
+  };
 
   return (
     <>
-      <Navbar expand="md" className="shadow-sm py-2 sticky-top bg-primary" style={{ backgroundColor: '#fff !important' }}>      
-          <Container fluid="lg">
+      <Navbar expand="md" className="shadow-sm py-2 sticky-top" style={{ backgroundColor: 'rgb(0, 78, 100)' }}>
+        <Container fluid="lg">
           {/* Logo */}
           <Navbar.Brand href="#" className="d-flex align-items-center me-md-5">
             <Image
@@ -42,40 +49,10 @@ function MyNavbar() {
           </Navbar.Brand>
 
           {/* Hamburger Toggle Button */}
-          <Navbar.Toggle 
-            aria-controls="main-navbar" 
-            className="border-0"
-          >
-            <span 
-              style={{
-                display: 'block',
-                width: '25px',
-                height: '3px',
-                backgroundColor: '#E0FECA',
-                margin: '5px 0',
-                transition: 'all 0.3s ease'
-              }}
-            />
-            <span 
-              style={{
-                display: 'block',
-                width: '25px',
-                height: '3px',
-                backgroundColor: '#E0FECA',
-                margin: '5px 0',
-                transition: 'all 0.3s ease'
-              }}
-            />
-            <span 
-              style={{
-                display: 'block',
-                width: '25px',
-                height: '3px',
-                backgroundColor: '#E0FECA',
-                margin: '5px 0',
-                transition: 'all 0.3s ease'
-              }}
-            />
+          <Navbar.Toggle aria-controls="main-navbar" className="border-0">
+            <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#E0FECA', margin: '5px 0', transition: 'all 0.3s ease' }} />
+            <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#E0FECA', margin: '5px 0', transition: 'all 0.3s ease' }} />
+            <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#E0FECA', margin: '5px 0', transition: 'all 0.3s ease' }} />
           </Navbar.Toggle>
 
           {/* Collapsible Menu */}
@@ -83,7 +60,7 @@ function MyNavbar() {
             <Nav className="me-auto align-items-center">
               <Nav.Link
                 as={NavLink}
-                to="/HomePage"
+                to="/home"
                 end
                 className={({ isActive }) =>
                   `mx-1 mx-md-2 px-3 py-2 rounded hover-effect ${
@@ -163,35 +140,10 @@ function MyNavbar() {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.color = '#E0FECA';
                 }}
+                onClick={handleLogout}  // <-- attached logout handler here
               >
                 <i className="bi bi-box-arrow-in-right me-2"></i>
-                Login
-              </Button>
-              <Button
-                style={{
-                  backgroundColor: '#F3B550',
-                  color: '#004E64',
-                  borderRadius: '50px',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                  transition: 'all 0.3s ease',
-                  minWidth: '120px',
-                  justifyContent: 'center',
-                  fontFamily: 'TAN-St-Canard, sans-serif',
-                  fontWeight: 'bold',
-                  border: 'none'
-                }}
-                className="px-3 px-md-4 py-2 d-flex align-items-center"
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = '#E56E38';
-                  e.currentTarget.style.color = '#E0FECA';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = '#F3B550';
-                  e.currentTarget.style.color = '#004E64';
-                }}
-              >
-                <i className="bi bi-person-plus me-2"></i>
-                Sign Up
+                Log Out
               </Button>
             </div>
           </Navbar.Collapse>
