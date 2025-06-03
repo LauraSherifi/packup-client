@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -6,6 +6,20 @@ function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // 🔒 Redirect to Start if user is not logged in and uses the back button
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      const handlePopState = () => {
+        navigate('/', { replace: true });
+      };
+      window.addEventListener('popstate', handlePopState);
+      return () => {
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,7 +29,6 @@ function Login() {
     e.preventDefault();
     setError('');
 
-    // Trim and validate inputs
     const email = form.email.trim();
     const password = form.password;
 
@@ -41,8 +54,14 @@ function Login() {
         return;
       }
 
-      // Correct this line to use `data.token`
-      localStorage.setItem('token', data.token);
+      // Save token and user info
+      const { token, user } = data;
+      const { username, role } = user;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('username', username);
+      localStorage.setItem('role', role);
+
       navigate('/home', { replace: true });
 
     } catch (err) {

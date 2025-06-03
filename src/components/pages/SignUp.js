@@ -7,28 +7,76 @@ function SignUp() {
     fullName: '',
     email: '',
     password: '',
+    confirmPassword: '',
     phone: '',
     city: '',
-    role: 'user',
+    role: '',
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Restrict phone input to digits only
+    if (name === 'phone') {
+      if (!/^\d*$/.test(value)) return;
+    }
+
+    setForm({ ...form, [name]: value });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    // Full name: at least 2 words
+    if (!form.fullName.trim() || form.fullName.trim().split(' ').length < 2) {
+      newErrors.fullName = 'Full name required (at least 2 words)';
+    }
+
+    // Email: valid format
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+      newErrors.email = 'Valid email required';
+    }
+
+    // Password: minimum 8 characters
+    if (form.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+
+    // Confirm password: must match
+    if (form.password !== form.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    // Role selection: required
+    if (!form.role) {
+      newErrors.role = 'Please select how you want to register';
+    }
+
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: form.fullName,  // your backend expects 'username'
+          username: form.fullName,
           email: form.email,
           password: form.password,
           role: form.role,
-          // phone and city are optional, send if your backend supports
+          phone: form.phone || undefined,
+          city: form.city || undefined,
         }),
       });
 
@@ -41,7 +89,6 @@ function SignUp() {
 
       alert('Registration successful! Please log in.');
       navigate('/login');
-
     } catch (error) {
       console.error('Error during registration:', error);
       alert('Something went wrong, please try again.');
@@ -49,15 +96,13 @@ function SignUp() {
   };
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-center min-vh-100"
-      style={{ backgroundColor: '#E0FECA' }}
-    >
+    <div className="d-flex align-items-center justify-content-center min-vh-100" style={{ backgroundColor: '#E0FECA' }}>
       <div className="card shadow-lg p-4" style={{ width: '100%', maxWidth: '500px', borderRadius: '1rem' }}>
         <h3 className="text-center mb-4" style={{ color: '#004E64' }}>
           Create Account
         </h3>
         <form onSubmit={handleSubmit}>
+          {/* Full Name */}
           <div className="mb-3">
             <label className="form-label">Full Name</label>
             <input
@@ -65,11 +110,14 @@ function SignUp() {
               value={form.fullName}
               onChange={handleChange}
               type="text"
-              className="form-control"
-              placeholder="Your name"
+              className={`form-control ${errors.fullName ? 'is-invalid' : ''}`}
+              placeholder="Your full name"
               required
             />
+            {errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
           </div>
+
+          {/* Email */}
           <div className="mb-3">
             <label className="form-label">Email</label>
             <input
@@ -77,11 +125,14 @@ function SignUp() {
               value={form.email}
               onChange={handleChange}
               type="email"
-              className="form-control"
+              className={`form-control ${errors.email ? 'is-invalid' : ''}`}
               placeholder="you@example.com"
               required
             />
+            {errors.email && <div className="invalid-feedback">{errors.email}</div>}
           </div>
+
+          {/* Password */}
           <div className="mb-3">
             <label className="form-label">Password</label>
             <input
@@ -89,13 +140,31 @@ function SignUp() {
               value={form.password}
               onChange={handleChange}
               type="password"
-              className="form-control"
+              className={`form-control ${errors.password ? 'is-invalid' : ''}`}
               placeholder="********"
               required
             />
+            {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
+
+          {/* Confirm Password */}
           <div className="mb-3">
-            <label className="form-label">Phone</label>
+            <label className="form-label">Confirm Password</label>
+            <input
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
+              type="password"
+              className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+              placeholder="********"
+              required
+            />
+            {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
+          </div>
+
+          {/* Phone */}
+          <div className="mb-3">
+            <label className="form-label">Phone (optional)</label>
             <input
               name="phone"
               value={form.phone}
@@ -105,27 +174,42 @@ function SignUp() {
               placeholder="+383..."
             />
           </div>
+
+          {/* City */}
           <div className="mb-3">
-            <label className="form-label">City</label>
+            <label className="form-label">City (optional)</label>
             <input
               name="city"
               value={form.city}
               onChange={handleChange}
               type="text"
               className="form-control"
+              placeholder="City"
             />
           </div>
+
+          Role
           <div className="mb-3">
             <label className="form-label">Register as</label>
-            <select name="role" value={form.role} onChange={handleChange} className="form-select">
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              className={`form-select ${errors.role ? 'is-invalid' : ''}`}
+              required
+            >
+              <option value="">-- Select Role --</option>
               <option value="user">User</option>
               <option value="trip_planner">Trip Planner</option>
             </select>
+            {errors.role && <div className="invalid-feedback">{errors.role}</div>}
           </div>
+
           <button type="submit" className="btn w-100" style={{ backgroundColor: '#25A18E', color: 'white' }}>
             Sign Up
           </button>
         </form>
+
         <p className="mt-3 text-center">
           Already have an account?{' '}
           <Link to="/login" style={{ color: '#E56E38' }}>

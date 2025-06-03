@@ -38,7 +38,7 @@ const HomePage = () => {
   const fallbackImg = '/img/default-trip.jpg';
 
   return (
-    <div className="home-page">
+    <div className="home-page" style={{background:'#E0FECA'}}>
       {/* Main Carousel */}
       <div className="position-relative mx-4 mb-5">
         <div

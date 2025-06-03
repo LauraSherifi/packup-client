@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'; // Added useNavigate
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Container, Nav, Navbar, Button, Image } from 'react-bootstrap';
 import ContactUs from '../pages/ContactUs';
 
@@ -7,13 +7,23 @@ const logo1 = '/img/logo1.png';
 
 function MyNavbar() {
   const [showContactModal, setShowContactModal] = useState(false);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  // Logout handler function
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token from storage
-    navigate('/login'); // Redirect to login page
-  };
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+
+const handleLogout = () => {
+  const confirmed = window.confirm('Are you sure you want to log out?');
+  if (confirmed) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    
+    navigate('/login', { replace: true });
+
+    window.location.reload();
+  }
+};
 
   return (
     <>
@@ -117,8 +127,20 @@ function MyNavbar() {
               </Nav.Link>
             </Nav>
 
-            {/* Right-aligned buttons */}
+            {/* Right-aligned buttons and user greeting */}
             <div className="d-flex flex-column flex-md-row align-items-center gap-2 my-2 my-md-0 ms-md-3">
+              {username && (
+                <span style={{
+                  color: '#E0FECA',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem',
+                  marginRight: '1rem',
+                  fontFamily: 'TAN-St-Canard, sans-serif',
+                  whiteSpace: 'nowrap'
+                }}>
+                  Hi, <br/> {username} <br/> Registered as: {role}
+                </span>
+              )}
               <Button
                 variant="outline-light"
                 className="px-3 px-md-4 py-2 d-flex align-items-center"
@@ -140,7 +162,7 @@ function MyNavbar() {
                   e.currentTarget.style.backgroundColor = 'transparent';
                   e.currentTarget.style.color = '#E0FECA';
                 }}
-                onClick={handleLogout}  // <-- attached logout handler here
+                onClick={handleLogout}
               >
                 <i className="bi bi-box-arrow-in-right me-2"></i>
                 Log Out

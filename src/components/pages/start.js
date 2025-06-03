@@ -15,7 +15,7 @@ function Start() {
   ];
 
   return (
-    <div className="position-relative min-vh-100 d-flex" style={{ backgroundColor: '#F3B550' }}>
+    <div className="position-relative min-vh-100 d-flex" style={{ backgroundColor: '#E0FECA' }}>
       
       {/* Background image boxes */}
       {backgroundBoxes.map((box, index) => (
@@ -30,7 +30,7 @@ function Start() {
             backgroundImage: `url(${box.img})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            opacity: 0.7,
+            opacity: 0.8,
             border: '5px solid #25A18E',
             zIndex: 0,
           }}
@@ -41,7 +41,7 @@ function Start() {
         <div className="row w-100">
           <div className="col-md-6 d-flex flex-column justify-content-center p-5 text-white">
             <h1 style={{ color: '#004E64' }}>Welcome to PackUp!</h1>
-            <p style={{ fontSize: '1.2rem' }}>
+            <p style={{ fontSize: '1.2rem', color: '#004E64'}}>
               Plan group trips effortlessly. Choose your role, connect with trip planners or join as a user!
             </p>
           </div>
