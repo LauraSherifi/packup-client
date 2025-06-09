@@ -11,7 +11,7 @@ const TripList = () => {
         const res = await axios.get('/api/trips', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setTrips(res.data);
+        setTrips(res.data.trips);
       } catch (err) {
         console.error('Error fetching trips:', err);
       }

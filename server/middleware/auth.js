@@ -11,7 +11,7 @@ function verifyToken(req, res, next) {
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: 'Invalid token' });
-    req.user = user;
+    req.user = user;  // This gives access to user.id and user.role
     next();
   });
 }

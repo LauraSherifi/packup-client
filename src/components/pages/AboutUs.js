@@ -1,22 +1,22 @@
 import React from 'react';
-import { Container, Row, Col, Image, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 const slider2 = '/img/slider2.jpg';
 
 function AboutUs() {
   const contentSections = [
     {
       title: "About Us",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.",
+      description: "Welcome to PackUp – your smart companion for effortless group travel planning. We know how chaotic it can be to organize trips with friends, family, or colleagues – juggling group chats, spreadsheets, and endless back-and-forth messages. That’s why we built PackUp: a streamlined, all-in-one web platform that takes the stress out of organizing group adventures. Whether you're planning a weekend getaway or an international tour, PackUp helps you coordinate, create, and customize your journey with ease.",
       icon: "bi bi-people-fill"
     },
     {
       title: "Our Mission",
-      description: "Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.",
+      description: "Our mission is to make group travel fun, collaborative, and totally hassle-free. We empower trip planners and travelers alike with tools that simplify decision-making, trip tracking, and communication. From managing itineraries and assigning roles to voting on destinations and sharing updates, PackUp ensures everyone stays on the same page – literally. We aim to turn the chaos of planning into the joy of anticipation.",
       icon: "bi bi-bullseye"
     },
     {
       title: "Our Values",
-      description: "Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.",
+      description: "At PackUp, we value simplicity, connection, and inclusivity. We believe travel should bring people together, not pull them apart with logistics and stress. We design with users in mind, prioritize transparency, and build features that help teams of all types collaborate. Whether you're the planner or just along for the ride, everyone’s voice matters. With PackUp, your trip isn’t just better organized – it’s more meaningful from the very start.",
       icon: "bi bi-heart-fill"
     }
   ];
@@ -43,7 +43,7 @@ function AboutUs() {
         </Col>
 
         {/* Content Section */}
-        <Col lg={6} className="d-flex align-items-center py-5" style={{ backgroundColor: '#E0FECA' }}>
+        <Col lg={6} className="d-flex align-items-center py-5" style={{ backgroundColor: '#fff' }}>
           <Container className="py-lg-5">
             <div className="mb-5 text-center text-lg-start position-relative">
               <h2 className="fw-bold mb-3" style={{ color: '#004E64' }}>Who We Are</h2>
@@ -57,7 +57,7 @@ function AboutUs() {
             <Row className="g-4">
               {contentSections.map((section, index) => (
                 <Col md={12} key={index}>
-                  <Card className="h-100 border-0 shadow-sm" style={{ transition: 'all 0.3s ease', backgroundColor: '#ffffff' }}>
+                  <Card className="h-100 border-0 shadow-sm" style={{ transition: 'all 0.3s ease', backgroundColor: '#fff' }}>
                     <Card.Body className="p-4">
                       <div className="d-flex">
                         <div className="me-4">
@@ -65,16 +65,9 @@ function AboutUs() {
                         </div>
                         <div>
                           <Card.Title className="fw-bold mb-3" style={{ color: '#004E64' }}>{section.title}</Card.Title>
-                          <Card.Text className="text-muted mb-4">
+                          <Card.Text className="text-muted mb-0">
                             {section.description}
                           </Card.Text>
-                          <Button 
-                            variant="outline-success" 
-                            className="rounded-pill px-4"
-                            style={{ borderColor: '#004E64', color: '#004E64' }}
-                          >
-                            Read More
-                          </Button>
                         </div>
                       </div>
                     </Card.Body>
