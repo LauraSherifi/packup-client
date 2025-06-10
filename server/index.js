@@ -8,27 +8,26 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware: Enable CORS and parse JSON bodies
+// Middleware (important)
 app.use(cors());
 app.use(express.json());
 
+//images using multer
 app.use('/uploads', express.static('public/uploads'));
 
-// Import Routes
-const authRoutes = require('./routes/authRoutes');         // /api/auth
-const protectedRoutes = require('./routes/protectedRoutes'); // /api/protected (example protected endpoints)
-const tripRoutes = require('./routes/trips');               // /api/trips
-const adminRoutes = require('./routes/adminRoutes');        // /api/admin
+// Import Routes (api/...)
+const authRoutes = require('./routes/authRoutes');      
+const protectedRoutes = require('./routes/protectedRoutes'); 
+const tripRoutes = require('./routes/trips');               
+const adminRoutes = require('./routes/adminRoutes');        
 const aboutUsRoute = require('./routes/aboutus');
 
+// Use Routes
 app.use('/api/about', aboutUsRoute);
-// Use Routes with prefixes
 app.use('/api/auth', authRoutes);
 app.use('/api/protected', protectedRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/admin', adminRoutes);
-
-// ➕ Contact form route with DB save
 app.post('/api/contact', (req, res) => {
   const { name, email, message } = req.body;
 
@@ -48,7 +47,7 @@ app.post('/api/contact', (req, res) => {
   });
 });
 
-// Test DB connection route
+// Test DB conn
 app.get('/test-db', (req, res) => {
   db.query('SELECT 1 + 1 AS result', (err, results) => {
     if (err) {

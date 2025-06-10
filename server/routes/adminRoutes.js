@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db'); // fixed path
+const db = require('../config/db'); 
 const authenticateToken = require('../middleware/auth');
 const { authorizeRoles } = require('../middleware/roleMiddleware');
 
-// Protect all routes below - only admin access
 router.use(authenticateToken, authorizeRoles('admin'));
 
-// GET all users
+//GET, UPDATE, DELETE; admin for users/tripplanners
 router.get('/users', (req, res) => {
   const query = 'SELECT id, username, email, role FROM users';
   db.query(query, (err, results) => {
@@ -16,7 +15,6 @@ router.get('/users', (req, res) => {
   });
 });
 
-// UPDATE a user (username, role)
 router.put('/users/:id', (req, res) => {
   const { username, role } = req.body;
   const { id } = req.params;
@@ -30,7 +28,6 @@ router.put('/users/:id', (req, res) => {
   });
 });
 
-// DELETE a user
 router.delete('/users/:id', (req, res) => {
   const { id } = req.params;
   const query = 'DELETE FROM users WHERE id = ?';

@@ -18,7 +18,7 @@ function SignUp() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Restrict phone input to digits only
+    //phone digits only
     if (name === 'phone') {
       if (!/^\d*$/.test(value)) return;
     }

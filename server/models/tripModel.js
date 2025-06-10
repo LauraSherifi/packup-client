@@ -1,7 +1,6 @@
-const db = require('../config/db'); // your mysql connection
+const db = require('../config/db'); 
 
 const tripModel = {
-  // Create a new trip (with optional image)
   createTrip: (tripData, callback) => {
     const sql = `
       INSERT INTO trips (title, description, startDate, endDate, createdBy, img)
@@ -13,7 +12,7 @@ const tripModel = {
       tripData.startDate,
       tripData.endDate,
       tripData.createdBy,
-      tripData.img || null // optional image
+      tripData.img || null 
     ];
     db.query(sql, params, (err, results) => {
       if (err) return callback(err);
@@ -21,7 +20,7 @@ const tripModel = {
     });
   },
 
-  // Get trips created by a specific user
+
   getTripsByUser: (userId, callback) => {
     const sql = `SELECT * FROM trips WHERE createdBy = ?`;
     db.query(sql, [userId], (err, results) => {
@@ -30,7 +29,7 @@ const tripModel = {
     });
   },
 
-  // Get a single trip by ID
+
   getTripById: (tripId, callback) => {
     const sql = `SELECT * FROM trips WHERE id = ?`;
     db.query(sql, [tripId], (err, results) => {
@@ -39,7 +38,7 @@ const tripModel = {
     });
   },
 
-  // Get all trips (for homepage, admin, or users)
+
   getAllTrips: (callback) => {
     const sql = `SELECT * FROM trips`;
     db.query(sql, (err, results) => {
@@ -48,7 +47,6 @@ const tripModel = {
     });
   },
 
-  // Update a trip (including optional image)
   updateTrip: (tripId, tripData, callback) => {
     const sql = `
       UPDATE trips
@@ -69,7 +67,6 @@ const tripModel = {
     });
   },
 
-  // Delete a trip by ID
   deleteTrip: (tripId, callback) => {
     const sql = `DELETE FROM trips WHERE id = ?`;
     db.query(sql, [tripId], (err, results) => {

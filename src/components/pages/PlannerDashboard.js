@@ -94,7 +94,7 @@ const PlannerDashboard = () => {
       description: trip.description || '',
       startDate: trip.startDate ? trip.startDate.split('T')[0] : '',
       endDate: trip.endDate ? trip.endDate.split('T')[0] : '',
-      img: null // Reset to null; user can re-upload
+      // img: null 
     });
     setShowModal(true);
   };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 const slider2 = '/img/slider2.jpg';
 
+//static info
 function AboutUs() {
   const contentSections = [
     {
@@ -24,7 +25,7 @@ function AboutUs() {
   return (
     <Container fluid className="px-0 overflow-hidden" style={{ backgroundColor: '#E0FECA' }}>
       <Row className="g-0 min-vh-100">
-        {/* Hero Image Section */}
+        {/* image part (left & top) */}
         <Col lg={6} className="position-relative">
           <Image 
             src={slider2}
@@ -42,7 +43,7 @@ function AboutUs() {
           </div>
         </Col>
 
-        {/* Content Section */}
+        {/* Title and paragraf */}
         <Col lg={6} className="d-flex align-items-center py-5" style={{ backgroundColor: '#fff' }}>
           <Container className="py-lg-5">
             <div className="mb-5 text-center text-lg-start position-relative">
@@ -53,7 +54,7 @@ function AboutUs() {
               <div className="position-absolute bottom-0 start-0 w-50 h-1" style={{ backgroundColor: '#25A18E' }}></div>
             </div>
 
-            {/* Content Cards */}
+            {/* Cards with info */}
             <Row className="g-4">
               {contentSections.map((section, index) => (
                 <Col md={12} key={index}>

@@ -28,10 +28,10 @@ const HomePage = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log('✔️ Trips fetched:', res.data.trips);
+        console.log(' Trips fetched:', res.data.trips);
         setTrips(res.data.trips || []);
       } catch (err) {
-        console.error('❌ Error fetching trips:', err.response || err);
+        console.error(' Error fetching trips:', err.response || err);
         setError('Failed to fetch trips. Please check your login or server.');
       } finally {
         setLoading(false);
@@ -43,7 +43,6 @@ const HomePage = () => {
 
   return (
     <div className="home-page" style={{ background: '#fff' }}>
-      {/* Hero */}
       <div className="position-relative mx-4 mb-5">
         <div className="position-absolute top-50 start-50 translate-middle text-white text-center z-2"
           style={{ textShadow: '2px 2px 6px rgba(0,0,0,0.8)' }}>

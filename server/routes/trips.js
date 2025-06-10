@@ -8,7 +8,7 @@ const authMiddleware = require('../middleware/auth');
 const { authorizeRoles } = require('../middleware/roleMiddleware');
 const tripModel = require('../models/tripModel');
 
-// Multer storage configuration
+// Multer storage-config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/');
@@ -22,9 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// === ROUTES ===
-
-// ✅ Get all trips (any authenticated user)
+//get * trips
 router.get('/', authMiddleware, (req, res) => {
   const sql = 'SELECT * FROM trips';
   db.query(sql, (err, results) => {
@@ -33,7 +31,7 @@ router.get('/', authMiddleware, (req, res) => {
   });
 });
 
-// ✅ Get current planner's trips
+// Get current planner's trips
 router.get('/my-trips', authMiddleware, authorizeRoles('trip_planner'), (req, res) => {
   const sql = 'SELECT * FROM trips WHERE createdBy = ?';
   db.query(sql, [req.user.id], (err, results) => {
@@ -42,7 +40,7 @@ router.get('/my-trips', authMiddleware, authorizeRoles('trip_planner'), (req, re
   });
 });
 
-// ✅ Create trip with optional image (trip planners only)
+// Create-with image(optional)
 router.post('/', authMiddleware, authorizeRoles('trip_planner'), upload.single('img'), (req, res) => {
   const { title, description, startDate, endDate } = req.body;
 
@@ -71,7 +69,7 @@ router.post('/', authMiddleware, authorizeRoles('trip_planner'), upload.single('
 });
 
 
-// ✅ Update trip
+// Update trip
 router.put('/:id', authMiddleware, authorizeRoles('trip_planner'), upload.single('img'), (req, res) => {
   const tripId = req.params.id;
   const { title, description, startDate, endDate } = req.body;
@@ -88,7 +86,7 @@ router.put('/:id', authMiddleware, authorizeRoles('trip_planner'), upload.single
   });
 });
 
-// ✅ Get one trip
+// Get one trip
 router.get('/:id', authMiddleware, (req, res) => {
   const tripId = req.params.id;
   tripModel.getTripById(tripId, (err, trip) => {
@@ -98,7 +96,7 @@ router.get('/:id', authMiddleware, (req, res) => {
   });
 });
 
-// ✅ Delete trip
+// Delete trip
 router.delete('/:id', authMiddleware, authorizeRoles('trip_planner'), (req, res) => {
   const tripId = req.params.id;
   tripModel.deleteTrip(tripId, (err, result) => {

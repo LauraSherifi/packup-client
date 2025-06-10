@@ -20,12 +20,13 @@ function MyNavbar() {
     }
   };
 
+  //show button only if -> tripplanner
   const renderDashboardButton = () => {
     if (role === 'admin') {
       return (
         <Button
           as={NavLink}
-          to="/admin"    // FIXED route here for admin dashboard
+          to="/admin"    
           variant="outline-light"
           className="px-3 py-2"
           style={dashboardButtonStyle}
@@ -36,11 +37,12 @@ function MyNavbar() {
         </Button>
       );
     }
+    //show button only if -> tripplanner
     if (role === 'trip_planner') {
       return (
         <Button
           as={NavLink}
-          to="/planner-dashboard"  // Ensure this matches your route setup
+          to="/planner-dashboard" 
           variant="outline-light"
           className="px-3 py-2"
           style={dashboardButtonStyle}

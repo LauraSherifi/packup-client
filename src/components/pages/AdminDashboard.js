@@ -9,6 +9,7 @@ function AdminDashboard() {
 
   const token = localStorage.getItem('token');
 
+  //get users/tripplanners
   const fetchUsers = useCallback(async () => {
     try {
       const res = await fetch('http://localhost:5000/api/admin/users', {
@@ -26,6 +27,7 @@ function AdminDashboard() {
     fetchUsers();
   }, [fetchUsers]);
 
+  //delete users/tripplanners
   const handleDelete = async (id, role) => {
     const confirmDelete = window.confirm(`Are you sure you want to delete this ${role}?`);
     if (!confirmDelete) return;
@@ -43,6 +45,7 @@ function AdminDashboard() {
     }
   };
 
+  //edit users/tripplanners
   const handleEdit = (user) => {
     setEditingUserId(user.id);
     setEditFormData({ username: user.username, role: user.role });

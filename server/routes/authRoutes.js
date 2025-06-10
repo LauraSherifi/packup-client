@@ -6,19 +6,18 @@ const userModel = require('../models/userModel');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Register Route
 router.post('/register', async (req, res) => {
   let { username, email, password, role } = req.body;
 
   try {
-    // ✅ Hardcoded admin credentials check
+    // THEE 1 admin
     if (
       email === 'admin@packup.com' &&
       password === 'Admin123'
     ) {
       role = 'admin';
     } else {
-      role = role || 'user'; // fallback role
+      role = role || 'user';
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

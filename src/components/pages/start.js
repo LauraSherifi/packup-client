@@ -17,7 +17,7 @@ function Start() {
   return (
     <div className="position-relative min-vh-100 d-flex" style={{ backgroundColor: '#E0FECA' }}>
       
-      {/* Background image boxes */}
+      {/* Background image boxes*/}
       {backgroundBoxes.map((box, index) => (
         <div
           key={index}
